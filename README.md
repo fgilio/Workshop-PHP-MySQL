@@ -4,7 +4,7 @@
 ### Download / Clone
 
 ```bash
-git@github.com:fgilio/Workshop-PHP-MySQL.git
+git clone https://github.com/fgilio/Workshop-PHP-MySQL.git
 ```
 
 Alternatively you can [download](https://github.com/fgilio/Workshop-PHP-MySQL/archive/master.zip)
