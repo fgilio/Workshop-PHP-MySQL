@@ -6,4 +6,4 @@
   session_destroy();
 
   // Redirigimos a la Home
-  redirect_to( '/taller_php/index.php' );
+  redirect_to( '/mis_notas_app/index.php' );

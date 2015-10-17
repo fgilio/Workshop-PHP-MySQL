@@ -24,6 +24,7 @@ function conectar_Base_de_Datos() {
   // mysqli_connect() se conecta con el servidor de la Base de Datos y selecciona una Base de Datos
   // Luego guarda la referencia de la conexion en la variable $conexion
   $conexion =  mysqli_connect( $mysql_hostname, $mysql_user, $mysql_password, $database_name );
+  // Configuramos la conexion para que utilice el formato utf8, para poder usar acentos y demás caracteres especiales
   mysqli_set_charset( $conexion, "utf8" );
 
   // Comprobamos si hubo un error

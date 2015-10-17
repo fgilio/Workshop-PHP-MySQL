@@ -20,7 +20,7 @@
 
       if ( $nuevo_user_ID ) {
 
-        redirect_to( '/taller_php/user_login.php' );
+        redirect_to( '/mis_notas_app/user_login.php' );
 
       }
 

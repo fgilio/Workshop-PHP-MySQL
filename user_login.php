@@ -19,7 +19,7 @@
       $_SESSION['user_ID'] = $user['user_ID'];
       $_SESSION['user_email'] = $user['user_email'];
 
-      redirect_to( '/taller_php/index.php' );
+      redirect_to( '/mis_notas_app/index.php' );
 
     }
   }

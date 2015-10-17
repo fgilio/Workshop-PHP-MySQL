@@ -8,7 +8,7 @@
 
     if ( $nota_ID_eliminada ) {
 
-      redirect_to( '/taller_php/index.php' );
+      redirect_to( '/mis_notas_app/index.php' );
 
     }
 

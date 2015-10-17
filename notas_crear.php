@@ -14,7 +14,7 @@
 
     if ( $nueva_nota_ID ) {
 
-      redirect_to( '/taller_php/notas_editar.php?nota_ID='. $nueva_nota_ID );
+      redirect_to( '/mis_notas_app/notas_editar.php?nota_ID='. $nueva_nota_ID );
 
     }
 
