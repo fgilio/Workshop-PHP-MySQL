@@ -1,8 +1,0 @@
-.container [class*="card"] {
-  margin: 1%;
-  margin-bottom: 30px;
-}
-
-.container [class*="card"].g--4 {
-  width: 31.3333%;
-}

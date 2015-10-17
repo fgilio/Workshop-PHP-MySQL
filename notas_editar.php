@@ -1,45 +1,40 @@
 <?php
-include_once '_common.php';
-
-$header_titulo = 'Editar Nota';
-
+  // Incluimos el archivo que contiene utilidades generales
+  include '_common.php';
 
 
 
 
-if ( !empty($_GET['nota_ID']) ) {
 
-  if ( !empty($_GET['nota_titulo']) && !empty($_GET['nota_contenido'])) {
+  if ( !empty($_GET['nota_ID']) ) {
 
-      $editar = editar_nota( $_GET['nota_ID'], $_GET['nota_titulo'], $_GET['nota_contenido'] );
+    if ( !empty($_GET['nota_titulo']) && !empty($_GET['nota_contenido'])) {
+
+        $editar = editar_nota( $_GET['nota_ID'], $_GET['nota_titulo'], $_GET['nota_contenido'] );
+
+    }
 
   }
-
-}
 
 ?>
 <!DOCTYPE html>
 <html>
 
-<?php include_once 'modulos/_head.php' ?>
+  <?php include 'modulos/_head.php' ?>
 
 <body>
 
-<?php include_once 'modulos/_menu.php' ?>
+  <?php include 'modulos/_menu.php' ?>
 
   <main class="g--10 g-m--12 m--2 m-m--0 no-margin-vertical">
-
-    <?php include_once 'modulos/_header.php' ?>
-
-<!--    <div class="g--10 m--1">
-      <h2 class="fade-in-from-top color--pink">Últimas Notas de la comunidad</h2>
-    </div> -->
-
+    <header class="container--wrap">
+      <h1 class="m--1 g--4 g-s--12">Editar Nota</h1>
+    </header>
     <div class="g--10 m--1 container container--wrap--s">
 
       <?php
 
-      $nota = traer_nota( $_GET['nota_ID'] );
+        $nota = traer_nota( $_GET['nota_ID'] );
 
       ?>
 
@@ -56,8 +51,6 @@ if ( !empty($_GET['nota_ID']) ) {
     </div>
 
   </main>
-
-<?php include_once 'modulos/_footer.php' ?>
 
 </body>
 </hmtl>

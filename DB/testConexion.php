@@ -1,6 +1,6 @@
 <?php
 
-include_once 'DB_conexion.php'; 
+include 'DB_conexion.php'; 
 
 if( conectar() ) {
   echo "Connection established.<br />";     

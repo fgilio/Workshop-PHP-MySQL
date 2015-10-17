@@ -1,6 +1,9 @@
 <?php
-include_once '_common.php';
+  // Incluimos el archivo que contiene utilidades generales
+  include '_common.php';
 
-session_destroy();
+  // Cerramos la Sesión de PHP
+  session_destroy();
 
-redirect_to( '/taller_php/index.php' );
+  // Redirigimos a la Home
+  redirect_to( '/taller_php/index.php' );

@@ -1,17 +1,18 @@
 <?php
 /**
  * TIP
- * Un servidos de Bases de Datos puede contener más de una Base de Datos
+ * Un servidor de Bases de Datos puede contener más de una Base de Datos
  * Por eso siempre especificamos a cual nos queremos conectar
  */
 
 
-
-function conectar_Base_de_Datos()
-{
+/**
+ * Conectar con la Base de Datos
+ */
+function conectar_Base_de_Datos() {
   // Primero guardamos en variables la información de nuestra Base de Datos
-  // La direccion del servidor y el puerto
-  $mysql_hostname = "localhost:3306";
+  // La direccion del servidor
+  $mysql_hostname = "localhost";
   // El user
   $mysql_user = "root";
   // La contraseña
@@ -34,94 +35,106 @@ function conectar_Base_de_Datos()
     // Pero, si todo salio bien devolvemos la $conexion
     return $conexion;
   }
-
-  // die('No se pudo seleccionar Base de Datos');
 }
 
 
 
 
-
-// Envia datos de la Base de Datos
-function leer_datos( $sql )
-{
+/**
+ * Envia datos de la Base de Datos
+ */
+function leer_datos( $sql ) {
+  // Nos conectamos a la Base de Datos y guardamos la referencia en la variable $conexion
   $conexion = conectar_Base_de_Datos();
-  
+
+  // Ejecutamos la consulta, y guardamos el resultado en la variable $resultado
   $resultado = mysqli_query( $conexion, $sql );
 
+  // Comprobamos que la variable $resultado no esté vacia
   if ( !$resultado ) {
-      echo "No se pudo ejecutar Consulta";
-      echo 'MySQL Error: ' . mysqli_error( $conexion );
-      exit;
+    // Si hubo un error, hacemos un echo
+    echo "No se pudo ejecutar Consulta";
+    echo 'MySQL Error: ' . mysqli_error( $conexion );
+    // Y cerramos todo
+    exit;
   }
 
-  // print_r( mysqli_fetch_assoc( $resultado ) );
-
+  // Creamos la variable $resultado_final, va a ser un Array
   $resultado_final = array();
 
-  // echo count( mysqli_fetch_assoc( $resultado ));
-
-
+  // Cargamos los datos desde $resultado en $resultado_final
   while ( $row = mysqli_fetch_assoc( $resultado ) )
   {
     array_push( $resultado_final, $row );
   }
   if ( count($resultado_final) === 1 ) {
-    // echo "</br>";
-    // print_r( $resultado_final );
-    // echo "</br>";
     $resultado_final = $resultado_final[0];
-    // $resultado_final = mysqli_fetch_assoc( $resultado );
   }
   
-
-  // $resultado_final = mysqli_fetch_assoc( $resultado );
-
+  // Limpiamos la memoria
   mysqli_free_result( $resultado );
+  // Cerramos la conexion a la Base de Datos
   mysqli_close( $conexion );
+  // Devolvemos $resultado_final
   return $resultado_final;
 }
 
 
 
 
-
-// Modificar datos de la Base de Datos
-function modificar_datos( $sql )
-{
+/**
+ * Modificar datos de la Base de Datos
+ */
+function modificar_datos( $sql ) {
+  // Nos conectamos a la Base de Datos y guardamos la referencia en la variable $conexion
   $conexion = conectar_Base_de_Datos();
-  
+
+  // Ejecutamos la consulta, y guardamos el resultado en la variable $resultado
   $resultado = mysqli_query( $conexion, $sql );
 
+  // Comprobamos que la variable $resultado no esté vacia
   if ( !$resultado ) {
+    // Si hubo un error, hacemos un echo
     echo "No se pudo ejecutar Consulta";
     echo 'MySQL Error: ' . mysqli_error( $conexion );
+    // Y cerramos todo
     exit;
   } else {
-    $id = mysqli_insert_id($conexion);
+    // Guardamos el ID de las rows modificadas
+    $ID_row_modificada = mysqli_insert_id($conexion);
+    // Cerramos la conexion a la Base de Datos
     mysqli_close( $conexion );
-    return $id;
+    // Devolvemos el ID de las rows modificadas
+    return $ID_row_modificada;
   }
 }
 
 
 
 
-
-// Eliminar datos de la Base de Datos
-function eliminar_datos( $sql )
-{
+/**
+ * Eliminar datos de la Base de Datos
+ */
+function eliminar_datos( $sql ) {
+  // Nos conectamos a la Base de Datos y guardamos la referencia en la variable $conexion
   $conexion = conectar_Base_de_Datos();
-  
+
+  // Ejecutamos la consulta, y guardamos el resultado en la variable $resultado
   $resultado = mysqli_query( $conexion, $sql );
 
+  // Comprobamos que la variable $resultado no esté vacia
   if ( !$resultado ) {
+    // Si hubo un error, hacemos un echo
     echo "No se pudo ejecutar Consulta";
     echo 'MySQL Error: ' . mysqli_error( $conexion );
+    // Y cerramos todo
     exit;
   } else {
-    $affected_rows = mysqli_affected_rows($conexion);
+    // Guardamos el ID de las rows eliminadas
+    $ID_rows_eliminadas = mysqli_affected_rows($conexion);
+    // Cerramos la conexion a la Base de Datos
     mysqli_close( $conexion );
-    return $affected_rows;
+    // Devolvemos el ID de las rows eliminadas
+    return $ID_rows_eliminadas;
   }
 }
