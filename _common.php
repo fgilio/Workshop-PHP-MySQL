@@ -23,7 +23,7 @@
   }
 
   // Comprueba si el Array contiene más de 1 Nota
-  function mas_de_una_nota($notas) {
+  function hay_mas_de_una_nota($notas) {
     if ( isset($notas[0]) ) {
       return true;
     } else {

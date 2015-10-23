@@ -23,7 +23,7 @@
         $html = '';
 
 
-        if ( mas_de_una_nota($notas) ) {
+        if ( hay_mas_de_una_nota($notas) ) {
           foreach ( $notas as $nota ) {
             $html .='<div class="g--4 g-s--12 fade-in-from-top card">';
             $html .='<h3>'. $nota['nota_titulo'] .'</h3>';
