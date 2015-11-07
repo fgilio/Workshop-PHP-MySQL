@@ -2,26 +2,34 @@
   // Incluimos el archivo que contiene utilidades generales
   include '_common.php';
 
+  $error = '';
+
   if ( !empty($_POST['user_email']) && !empty($_POST['user_pass'])) {
 
     # prepare data for insertion
     $user_email = filter_var( $_POST['user_email'], FILTER_SANITIZE_EMAIL );
     $user_pass = filter_var( $_POST['user_pass'], FILTER_SANITIZE_STRING );
 
-    $error = '';
-
-    $user = traer_usuario( $user_email, $user_pass );
-
-    if ( !$user ) {
-      $error = 'Email y/o Contraseña incorrectos';
+    if ( !filter_var($user_email, FILTER_VALIDATE_EMAIL) ) {
+        $error = 'Ingresa un email válido';
     } else {
 
-      $_SESSION['user_ID'] = $user['user_ID'];
-      $_SESSION['user_email'] = $user['user_email'];
+      $user = traer_usuario( $user_email, $user_pass );
 
-      redirect_to( '/mis_notas_app/index.php' );
+      if ( !$user ) {
+        $error = 'Email y/o Contraseña incorrectos';
+        // Abajo, en el HTML, hacemos el echo de $error
+      } else {
+
+        $_SESSION['user_ID'] = $user['user_ID'];
+        $_SESSION['user_email'] = $user['user_email'];
+
+        redirect_to( '/mis_notas_app/index.php' );
+
+      }
 
     }
+
   }
 
 ?>

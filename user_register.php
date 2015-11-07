@@ -2,28 +2,33 @@
   // Incluimos el archivo que contiene utilidades generales
   include '_common.php';
 
+  $error = '';
+
   if ( !empty($_POST['user_email']) && !empty($_POST['user_pass'])) {
 
     // Comprobamos las variables antes de guardar en la Base de Datos
     $user_email = filter_var( $_POST['user_email'], FILTER_SANITIZE_EMAIL );
     $user_pass = filter_var( $_POST['user_pass'], FILTER_SANITIZE_STRING );
 
-    $error = '';
-
-    $user_ya_existe = existe_usuario( $user_email );
-
-    if ( $user_ya_existe ) {
-      $error = 'Ese email ya está en uso';
+    if ( !filter_var($user_email, FILTER_VALIDATE_EMAIL) ) {
+        $error = 'Ingresa un email válido';
     } else {
 
-      $nuevo_user_ID = crear_usuario( $user_email, $user_pass );
+      $user_ya_existe = existe_usuario( $user_email );
 
-      if ( $nuevo_user_ID ) {
+      if ( $user_ya_existe ) {
+        $error = 'Ese email ya está en uso';
+      } else {
 
-        redirect_to( '/mis_notas_app/user_login.php' );
+        $nuevo_user_ID = crear_usuario( $user_email, $user_pass );
+
+        if ( $nuevo_user_ID ) {
+
+          redirect_to( '/mis_notas_app/user_login.php' );
+
+        }
 
       }
-
     }
   }
 

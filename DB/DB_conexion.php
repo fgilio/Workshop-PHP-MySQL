@@ -16,7 +16,7 @@ function conectar_Base_de_Datos() {
   // El user
   $mysql_user = "root";
   // La contraseña
-  $mysql_password = "";
+  $mysql_password = "root";
   // El nombre de nuestra Base de Datos
   $database_name = "mis_notas_app";
 
@@ -24,8 +24,6 @@ function conectar_Base_de_Datos() {
   // mysqli_connect() se conecta con el servidor de la Base de Datos y selecciona una Base de Datos
   // Luego guarda la referencia de la conexion en la variable $conexion
   $conexion =  mysqli_connect( $mysql_hostname, $mysql_user, $mysql_password, $database_name );
-  // Configuramos la conexion para que utilice el formato utf8, para poder usar acentos y demás caracteres especiales
-  mysqli_set_charset( $conexion, "utf8" );
 
   // Comprobamos si hubo un error
   if ( mysqli_connect_errno() ) {
@@ -33,7 +31,9 @@ function conectar_Base_de_Datos() {
     echo "No se pudo conectar a la Base de Datos.";
     echo "MySQL Error: ". mysqli_connect_error();
   } else {
-    // Pero, si todo salio bien devolvemos la $conexion
+    // Pero, si todo salio bien configuramos la conexion para que utilice el formato utf8, para poder usar acentos y demás caracteres especiales
+    mysqli_set_charset( $conexion, "utf8" );
+    // Y devolvemos la $conexion
     return $conexion;
   }
 }
@@ -42,7 +42,7 @@ function conectar_Base_de_Datos() {
 
 
 /**
- * Envia datos de la Base de Datos
+ * Trae datos de la Base de Datos
  */
 function leer_datos( $sql ) {
   // Nos conectamos a la Base de Datos y guardamos la referencia en la variable $conexion
@@ -51,33 +51,34 @@ function leer_datos( $sql ) {
   // Ejecutamos la consulta, y guardamos el resultado en la variable $resultado
   $resultado = mysqli_query( $conexion, $sql );
 
-  // Comprobamos que la variable $resultado no esté vacia
+  // Comprobamos que la variable $resultado no esté vacía
   if ( !$resultado ) {
     // Si hubo un error, hacemos un echo
     echo "No se pudo ejecutar Consulta";
     echo 'MySQL Error: ' . mysqli_error( $conexion );
     // Y cerramos todo
     exit;
-  }
+  } else {
 
-  // Creamos la variable $resultado_final, va a ser un Array
-  $resultado_final = array();
+    // Creamos la variable $resultado_final, va a ser un Array
+    $resultado_final = array();
 
-  // Cargamos los datos desde $resultado en $resultado_final
-  while ( $row = mysqli_fetch_assoc( $resultado ) )
-  {
-    array_push( $resultado_final, $row );
+    // Cargamos los datos desde $resultado en $resultado_final
+    while ( $row = mysqli_fetch_assoc( $resultado ) )
+    {
+      array_push( $resultado_final, $row );
+    }
+    if ( count($resultado_final) === 1 ) {
+      $resultado_final = $resultado_final[0];
+    }
+
+    // Limpiamos la memoria
+    mysqli_free_result( $resultado );
+    // Cerramos la conexion a la Base de Datos
+    mysqli_close( $conexion );
+    // Devolvemos $resultado_final
+    return $resultado_final;
   }
-  if ( count($resultado_final) === 1 ) {
-    $resultado_final = $resultado_final[0];
-  }
-  
-  // Limpiamos la memoria
-  mysqli_free_result( $resultado );
-  // Cerramos la conexion a la Base de Datos
-  mysqli_close( $conexion );
-  // Devolvemos $resultado_final
-  return $resultado_final;
 }
 
 
